@@ -29,10 +29,16 @@ export default function Snippet(props) {
           </p>
           <div className='btn-group flex flex-row space-x-4'>
             <button
-              className='px-4 text-sm py-2 font-bold text-white capitalize bg-dark'
+              className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600'
               onClick={setCopied}
             >
               Copy
+            </button>
+            <button
+              className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600'
+              onClick={setCopied}
+            >
+              Export as Image
             </button>
           </div>
           <section className='w-2/4 font-semibold flex items-center justify-center'>
