@@ -3,7 +3,6 @@ import { useHistory, Link } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/Auth';
 import Header from '@/components/Header';
-import { split } from '@apollo/client';
 
 export default function Signup() {
   const emailRef = useRef();

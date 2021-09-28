@@ -20,3 +20,13 @@ export const GET_SPECIFIC_DATA = gql`
     }
   }
 `;
+
+export const REGISTER_USER = gql`
+  mutation MyMutation($username: String!) {
+    insert_katalia_user(objects: { username: $username }) {
+      returning {
+        username
+      }
+    }
+  }
+`;

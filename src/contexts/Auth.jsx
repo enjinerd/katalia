@@ -1,8 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { supabase } from '@/utils/supabase';
+import { useMutation } from '@apollo/client';
+import { REGISTER_USER } from '@/graphql/gql';
 
 const AuthContext = React.createContext();
 export function AuthProvider({ children }) {
+  const [addUsername] = useMutation(REGISTER_USER);
+
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +22,12 @@ export function AuthProvider({ children }) {
       async (event, session) => {
         setUser(session?.user ?? null);
         setLoading(false);
+        const defaultUsername = session.user.email
+          .substring(0, session.user.email.lastIndexOf('@'))
+          .split('')
+          .filter((d) => d !== '_' || d !== '.')
+          .join('');
+        console.log(defaultUsername);
       }
     );
 
