@@ -40,14 +40,23 @@ export default function Snippet(props) {
               Copy
             </button>
             <button
-              className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600'
-              onClick={() => exportComponentAsJPEG(snippetRef)}
+              className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600 w-'
+              onClick={() =>
+                exportComponentAsJPEG(snippetRef, {
+                  html2CanvasOptions: {
+                    windowWidth: 800,
+                    windowHeight: 800,
+                    width: 800,
+                    height: 800,
+                  },
+                })
+              }
             >
               Export as Image
             </button>
           </div>
           <section
-            className='font-semibold flex items-center justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-8 w-2/4 shadow-xl'
+            className='font-semibold flex items-center p-6 justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 md:w-2/4 shadow-xl'
             ref={snippetRef}
           >
             <div className='snipp text-sm'>

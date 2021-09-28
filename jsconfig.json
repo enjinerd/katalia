@@ -6,7 +6,9 @@
       "@/components/*": ["./components/*"],
       "@/pages/*": ["./pages/*"],
       "@/routes/*": ["./routes/*"],
-      "@/graphql/*": ["./graphql/*"]
+      "@/graphql/*": ["./graphql/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/contexts/*": ["./contexts/*"]
     }
   }
 }

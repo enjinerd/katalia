@@ -1,15 +1,19 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
-export default function PrivateRoute({ component: Component, ...rest }) {
-  const authenticated = true;
+import { useAuth } from '@/contexts/Auth';
+
+export function PrivateRoute({ component: Component, ...rest }) {
+  const { user } = useAuth();
 
   return (
     <Route
       {...rest}
-      render={(props) =>
-        authenticated ? <Component {...props} /> : <Redirect to={'/login'} />
-      }
-    />
+      render={(props) => {
+        // Renders the page only if `user` is present (user is authenticated)
+        // Otherwise, redirect to the login page
+        return user ? <Component {...props} /> : <Redirect to='/login' />;
+      }}
+    ></Route>
   );
 }
