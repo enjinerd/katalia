@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/Auth';
+import Header from '@/components/Header';
+import { split } from '@apollo/client';
 
 export default function Signup() {
   const emailRef = useRef();
@@ -18,34 +20,56 @@ export default function Signup() {
     // Get email and password input values
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const username = email
+      .substring(0, email.lastIndexOf('@'))
+      .split('')
+      .filter((d) => d !== '_' || d !== '.')
+      .join('');
 
     // Calls `signUp` function from the context
     const { error } = await signUp({ email, password });
 
     if (error) {
       alert('error signing in');
+      console.log(error);
     } else {
+      console.log(username);
       // Redirect user to Dashboard
-      history.push('/');
+      history.push('/dashboard');
     }
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='input-email'>Email</label>
-        <input id='input-email' type='email' ref={emailRef} />
+    <main>
+      <Header />
+      <section className='layout p-16 space-y-6'>
+        <form onSubmit={handleSubmit} className='flex flex-col space-y-4'>
+          <label htmlFor='input-email' className='font-bold text-dark'>
+            Email
+          </label>
+          <input id='input-email' type='email' ref={emailRef} />
 
-        <label htmlFor='input-password'>Password</label>
-        <input id='input-password' type='password' ref={passwordRef} />
+          <label htmlFor='input-password' className='font-bold text-dark'>
+            Password
+          </label>
+          <input id='input-password' type='password' ref={passwordRef} />
 
-        <br />
+          <br />
 
-        <button type='submit'>Sign up</button>
-      </form>
-      <p>
-        Already have an account? <Link to='/login'>Log In</Link>
-      </p>
-    </>
+          <button
+            type='submit'
+            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400'
+          >
+            Sign up
+          </button>
+        </form>
+        <p>
+          Already have an account?{' '}
+          <Link to='/login' className='font-bold text-dark'>
+            Log In
+          </Link>
+        </p>
+      </section>
+    </main>
   );
 }

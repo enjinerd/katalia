@@ -19,7 +19,7 @@ export default function Dashboard() {
   return (
     <div>
       {/* Change it to display the user ID too 👇*/}
-      <p>Welcome, {user?.id}!</p>
+      <p>Welcome, {user?.email}!</p>
       <button onClick={handleSignOut}>Sign out</button>
     </div>
   );

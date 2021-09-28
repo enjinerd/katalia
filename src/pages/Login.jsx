@@ -3,6 +3,7 @@ import { Button } from '@supabase/ui';
 import { useHistory, Link } from 'react-router-dom';
 
 import { useAuth } from '../contexts/Auth';
+import Header from '@/components/Header';
 
 export default function Login() {
   const emailRef = useRef();
@@ -25,28 +26,44 @@ export default function Login() {
 
     if (error) {
       alert('error signing in');
+      console.log(error);
     } else {
       // Redirect user to Dashboard
-      history.push('/');
+      history.push('/dashboard');
     }
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='input-email'>Email</label>
-        <input id='input-email' type='email' ref={emailRef} />
+    <main>
+      <Header />
+      <section className='layout p-16 space-y-6'>
+        <form onSubmit={handleSubmit} className='flex flex-col space-y-4'>
+          <label htmlFor='input-email' className='font-bold text-dark'>
+            Email
+          </label>
+          <input id='input-email' type='email' ref={emailRef} />
 
-        <label htmlFor='input-password'>Password</label>
-        <input id='input-password' type='password' ref={passwordRef} />
+          <label htmlFor='input-password' className='font-bold text-dark'>
+            Password
+          </label>
+          <input id='input-password' type='password' ref={passwordRef} />
 
-        <br />
+          <br />
 
-        <button type='submit'>Login</button>
-      </form>
-      <p>
-        Don't have an account? <Link to='/signup'>Sign Up</Link>
-      </p>
-    </>
+          <button
+            type='submit'
+            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400'
+          >
+            Login
+          </button>
+        </form>
+        <p>
+          Don't have an account?{' '}
+          <Link to='/signup' className='font-bold text-dark'>
+            Sign Up
+          </Link>
+        </p>
+      </section>
+    </main>
   );
 }
