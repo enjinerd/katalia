@@ -8,7 +8,7 @@ export default function Header() {
         <img src='/logo.png' />
       </Link>
       <Link to='/login'>
-        <button className='px-6 py-2 font-bold text-white capitalize bg-dark'>
+        <button className='px-6 py-2 font-bold text-white capitalize bg-gradient-to-r from-green-200 via-green-400 to-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100'>
           Login
         </button>
       </Link>

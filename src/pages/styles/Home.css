@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.snippet_card {
+  @apply hover:bg-gradient-to-r hover:from-gray-700 hover:via-gray-900 hover:to-black;
+}
