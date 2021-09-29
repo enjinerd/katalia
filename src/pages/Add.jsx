@@ -5,21 +5,47 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useForm, useFormState } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
 
 import Header from '@/components/Header';
 
 export default function Add() {
-  const [code, setCode] = useState('');
+  const {
+    register,
+    getValues,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+    setFocus,
+  } = useForm({
+    defaultValues: {
+      code: '',
+      name: '',
+    },
+  });
+  const watchCodeFields = watch('code'); // you can also target specific fields by their names
+
   const [isVisible, setVisible] = useState(false);
 
   // Get current user and signOut function from context
   const { user, signOut } = useAuth();
   const history = useHistory();
 
-  function handlePreview(e) {
-    setCode(e.target.value);
-  }
+  const onSubmit = async (data) => {
+    const code = getValues('code');
+    const title = getValues('title');
+    const desc = getValues('desc');
 
+    console.log(errors);
+  };
+
+  useEffect(() => {
+    if (errors) {
+      console.log(errors);
+    }
+  }, [errors]);
   return (
     <main className='flex flex-col min-h-screen'>
       <Header />
@@ -33,7 +59,7 @@ export default function Add() {
                 wrapLines
                 wrapLongLines
               >
-                {code}
+                {watchCodeFields}
               </SyntaxHighlighter>
             </div>
           </section>
@@ -45,7 +71,7 @@ export default function Add() {
             className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
             onClick={() => setVisible(!isVisible)}
           >
-            Preview
+            {isVisible ? 'Close Preview' : 'Preview'}
           </button>
           <button
             type='submit'
@@ -55,35 +81,77 @@ export default function Add() {
           </button>
         </section>
         <form className='flex flex-col space-y-4 w-full'>
-          <label htmlFor='input-email' className='font-bold text-dark'>
-            Title
-          </label>
-          <input id='input-email' type='email' />
+          <div className='flex flex-col space-y-2'>
+            <label htmlFor='input-title' className='font-bold text-dark'>
+              Title
+            </label>
+            <input
+              name='title'
+              id='title'
+              type='text'
+              {...register('title', {
+                required: 'Required',
+                maxLength: {
+                  value: 25,
+                  message: '25 char max',
+                },
+                minLength: { value: 9, message: '9 char min' },
+              })}
+              className={errors?.title && 'border border-red-500 bg-red-100'}
+              defaultValue={getValues('title')}
+            />
 
-          <label htmlFor='input-code' className='font-bold text-dark'>
-            Code
-          </label>
-          <input
-            id='input-code'
-            type='text'
-            onChange={(e) => handlePreview(e)}
-          />
+            {errors?.title && errors?.title.type == 'required' ? (
+              <p tw='text-red-500 text-sm'>🚨 Cant be empty!</p>
+            ) : null}
+            {errors?.title && errors?.title.type == 'minLength' ? (
+              <p tw='text-red-500 text-sm'>🚨 {errors?.title.message}!</p>
+            ) : null}
+          </div>
+          <div className='flex flex-col space-y-2'>
+            <label htmlFor='input-code' className='font-bold text-dark'>
+              Code
+            </label>
+            <input
+              name='code'
+              id='code'
+              type='text'
+              {...register('code', {
+                required: 'Required',
+                maxLength: {
+                  value: 55,
+                  message: '55 char max',
+                },
+                minLength: { value: 15, message: '15 char min' },
+              })}
+              className={errors?.code && 'border border-red-500 bg-red-100'}
+              defaultValue={getValues('code')}
+            />
 
-          <label htmlFor='input-desc' className='font-bold text-dark'>
-            Description
-          </label>
-          <textarea id='input-desc' type='text' />
-
+            {errors?.code && errors?.code.type == 'required' ? (
+              <p tw='text-red-500 text-sm'>🚨 Cant be empty!</p>
+            ) : null}
+            {errors?.code && errors?.code.type == 'minLength' ? (
+              <p tw='text-red-500 text-sm'>🚨 {errors?.code.message}!</p>
+            ) : null}
+          </div>{' '}
+          <div className='flex flex-col space-y-2'>
+            <label htmlFor='input-desc' className='font-bold text-dark'>
+              Description
+            </label>
+            <textarea id='input-desc' type='text' />
+          </div>
           <br />
-
           <button
             type='submit'
             className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
+            onClick={handleSubmit(onSubmit)}
           >
             Submit
           </button>
         </form>
       </section>
+      <Toaster />
     </main>
   );
 }
