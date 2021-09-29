@@ -22,11 +22,22 @@ export const GET_SPECIFIC_DATA = gql`
 `;
 
 export const REGISTER_USER = gql`
-  mutation MyMutation($username: String!) {
-    insert_katalia_user(objects: { username: $username }) {
+  mutation MyMutation($email: String!, $username: String!) {
+    insert_katalia_user(objects: { email: $email, username: $username }) {
       returning {
         username
+        email
       }
+    }
+  }
+`;
+
+export const GET_SPESIFIC_USER = gql`
+  query MyQuery($where: katalia_user_bool_exp! = {}) {
+    katalia_user(where: $where) {
+      email
+      id
+      username
     }
   }
 `;

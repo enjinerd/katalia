@@ -19,11 +19,6 @@ export default function Signup() {
     // Get email and password input values
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const username = email
-      .substring(0, email.lastIndexOf('@'))
-      .split('')
-      .filter((d) => d !== '_' || d !== '.')
-      .join('');
 
     // Calls `signUp` function from the context
     const { error } = await signUp({ email, password });
