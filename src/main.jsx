@@ -20,7 +20,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <Helmet
-      defaultTitle='Vite React Tailwind Starter'
+      defaultTitle='1Liner - Find one line JS Snippet'
       titleTemplate='%s | Vite React Tailwind Starter'
     >
       <meta charSet='utf-8' />

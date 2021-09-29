@@ -5,6 +5,7 @@ import Snip from '@/routes/Snip';
 import { AuthProvider } from '@/contexts/Auth';
 import { PrivateRoute } from './PrivateRoute';
 import Dashboard from '@/pages/Dashboard';
+import Add from '@/pages/Add';
 
 export default function Routes() {
   return (
@@ -16,6 +17,7 @@ export default function Routes() {
           <Route path='/login' component={Login} />
           <Route path='/snippet' component={Snip} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
+          <PrivateRoute path='/add' component={Add} />
         </Switch>
       </AuthProvider>
     </Router>

@@ -8,6 +8,7 @@ import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import useClipboard from 'react-use-clipboard';
 import { exportComponentAsJPEG } from 'react-component-export-image';
 import '@/pages/styles/Snippet.css';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Snippet(props) {
   const { snip } = useParams();
@@ -35,22 +36,16 @@ export default function Snippet(props) {
           <div className='btn-group flex flex-row space-x-4 items-end'>
             <button
               className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600'
-              onClick={setCopied}
+              onClick={() => {
+                setCopied();
+                toast.success('Code copied.');
+              }}
             >
               Copy
             </button>
             <button
               className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600 w-'
-              onClick={() =>
-                exportComponentAsJPEG(snippetRef, {
-                  html2CanvasOptions: {
-                    windowWidth: 800,
-                    windowHeight: 800,
-                    width: 800,
-                    height: 800,
-                  },
-                })
-              }
+              onClick={() => exportComponentAsJPEG(snippetRef)}
             >
               Export as Image
             </button>
@@ -95,6 +90,7 @@ export default function Snippet(props) {
           <div className='animate-spin rounded-full h-16 w-16 border-b-2 border-gray-900'></div>
         </section>
       )}
+      <Toaster />
     </main>
   );
 }

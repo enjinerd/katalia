@@ -5,6 +5,9 @@ import { GET_SPESIFIC_USER, REGISTER_USER } from '@/graphql/gql';
 import * as unsullied from 'unsullied';
 import { customAlphabet } from 'nanoid';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
+
+import Header from '@/components/Header';
 
 export default function Dashboard() {
   const [addUsername] = useMutation(REGISTER_USER);
@@ -48,10 +51,21 @@ export default function Dashboard() {
   }, [dataUser]);
 
   return (
-    <div>
-      {/* Change it to display the user ID too 👇*/}
-      <p>Welcome, {user?.email}!</p>
-      <button onClick={handleSignOut}>Sign out</button>
-    </div>
+    <main className='flex flex-col min-h-screen'>
+      <Header />
+      <section className='content  p-6 space-y-8 mt-3 flex flex-col items-center justify-center'>
+        <p className='text-lg'>
+          Hello{' '}
+          <span className='font-bold'>
+            {dataUser?.katalia_user[0].username}
+          </span>
+        </p>
+        <Link to='/add'>
+          <button className='px-4 py-2 font-bold text-white bg-blue-500 transition duration-500 transform hover:-translate-y-1  hover:bg-blue-400'>
+            Add Snippet
+          </button>
+        </Link>
+      </section>
+    </main>
   );
 }

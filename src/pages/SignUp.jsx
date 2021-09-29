@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { useAuth } from '@/contexts/Auth';
 import Header from '@/components/Header';
@@ -7,6 +8,11 @@ import Header from '@/components/Header';
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const [error, setError] = useState({
+    isError: false,
+    message: '',
+  });
 
   // Get signUp function from the auth context
   const { signUp } = useAuth();
@@ -21,11 +27,15 @@ export default function Signup() {
     const password = passwordRef.current.value;
 
     // Calls `signUp` function from the context
-    const { error } = await signUp({ email, password });
+    const { error: errorSignUp } = await signUp({ email, password });
 
-    if (error) {
-      alert('error signing in');
-      console.log(error);
+    if (errorSignUp) {
+      setError({
+        isError: true,
+        message: errorSignUp.message,
+      });
+      toast.error(error.message);
+      console.log(error.message);
     } else {
       console.log(username);
       // Redirect user to Dashboard
@@ -36,8 +46,11 @@ export default function Signup() {
   return (
     <main>
       <Header />
-      <section className='layout p-16 space-y-6'>
-        <form onSubmit={handleSubmit} className='flex flex-col space-y-4'>
+      <section className='layout w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
+        <form
+          onSubmit={handleSubmit}
+          className='flex flex-col space-y-4 w-full'
+        >
           <label htmlFor='input-email' className='font-bold text-dark'>
             Email
           </label>
@@ -64,6 +77,7 @@ export default function Signup() {
           </Link>
         </p>
       </section>
+      <Toaster />
     </main>
   );
 }
