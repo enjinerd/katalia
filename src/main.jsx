@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import { store, persistor } from '@/store/';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import '@/index.css';
 import App from '@/App';
@@ -26,9 +30,13 @@ ReactDOM.render(
       <meta charSet='utf-8' />
       <html lang='id' amp />
     </Helmet>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <ApolloProvider client={client}>
+          <App />
+        </ApolloProvider>
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -6,10 +6,16 @@ import * as unsullied from 'unsullied';
 import { customAlphabet } from 'nanoid';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUsername } from '@/store/globalSlice';
 
 import Header from '@/components/Header';
 
 export default function Dashboard() {
+  const globalState = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
   const [addUsername] = useMutation(REGISTER_USER);
   const [getSpecificUser, { data: dataUser, error }] =
     useLazyQuery(GET_SPESIFIC_USER);
@@ -40,6 +46,11 @@ export default function Dashboard() {
         },
       },
     });
+
+    if (dataUser?.katalia_user[0].username) {
+      dispatch(setUsername(dataUser?.katalia_user[0].username));
+    }
+
     if (dataUser?.katalia_user.length === 0) {
       addUsername({
         variables: {

@@ -41,3 +41,25 @@ export const GET_SPESIFIC_USER = gql`
     }
   }
 `;
+
+export const ADD_SNIPPET = gql`
+  mutation MyMutation(
+    $desc: String = ""
+    $id: String!
+    $snippet: String!
+    $title: String!
+    $username: String!
+  ) {
+    insert_katalia_snippet_one(
+      object: {
+        snippet: $snippet
+        username: $username
+        title: $title
+        desc: $desc
+        id: $id
+      }
+    ) {
+      title
+    }
+  }
+`;

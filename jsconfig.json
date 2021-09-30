@@ -8,7 +8,8 @@
       "@/routes/*": ["./routes/*"],
       "@/graphql/*": ["./graphql/*"],
       "@/utils/*": ["./utils/*"],
-      "@/contexts/*": ["./contexts/*"]
+      "@/contexts/*": ["./contexts/*"],
+      "@/store/*": ["./store/*"]
     }
   }
 }

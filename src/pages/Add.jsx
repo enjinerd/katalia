@@ -7,10 +7,17 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useForm, useFormState } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
+import { ADD_SNIPPET } from '@/graphql/gql';
+import { customAlphabet } from 'nanoid';
 
 import Header from '@/components/Header';
+import { useSelector } from 'react-redux';
 
 export default function Add() {
+  const [addSnippet] = useMutation(ADD_SNIPPET);
+  const nanoid = customAlphabet('1234567890abcdefghxr', 5);
+  const { username } = useSelector((state) => state.data);
+
   const {
     register,
     getValues,
@@ -37,14 +44,22 @@ export default function Add() {
     const code = getValues('code');
     const title = getValues('title');
     const desc = getValues('desc');
-
-    console.log(errors);
+    await addSnippet({
+      variables: {
+        id: nanoid(),
+        snippet: code,
+        title,
+        desc,
+        username,
+      },
+    });
   };
 
   useEffect(() => {
     if (errors) {
       console.log(errors);
     }
+    console.log(username);
   }, [errors]);
   return (
     <main className='flex flex-col min-h-screen'>
@@ -139,7 +154,12 @@ export default function Add() {
             <label htmlFor='input-desc' className='font-bold text-dark'>
               Description
             </label>
-            <textarea id='input-desc' type='text' />
+            <textarea
+              name='desc'
+              id='input-desc'
+              type='text'
+              {...register('desc')}
+            />
           </div>
           <br />
           <button
