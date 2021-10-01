@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '@/contexts/Auth';
-import { GET_SPESIFIC_USER, REGISTER_USER } from '@/graphql/gql';
+import {
+  GET_SPESIFIC_USER,
+  REGISTER_USER,
+  GET_SPECIFIC_DATA,
+} from '@/graphql/gql';
 import * as unsullied from 'unsullied';
 import { customAlphabet } from 'nanoid';
 import { useLazyQuery, useMutation } from '@apollo/client';
@@ -19,6 +23,9 @@ export default function Dashboard() {
   const [addUsername] = useMutation(REGISTER_USER);
   const [getSpecificUser, { data: dataUser, error }] =
     useLazyQuery(GET_SPESIFIC_USER);
+
+  const [getSpecificData, { data: dataSnippet }] =
+    useLazyQuery(GET_SPECIFIC_DATA);
 
   const nanoid = customAlphabet('1234567890abcdef', 4);
   const name = unsullied();
@@ -49,6 +56,15 @@ export default function Dashboard() {
 
     if (dataUser?.katalia_user[0].username) {
       dispatch(setUsername(dataUser?.katalia_user[0].username));
+      getSpecificData({
+        variables: {
+          where: {
+            username: {
+              _eq: dataUser?.katalia_user[0].username,
+            },
+          },
+        },
+      });
     }
 
     if (dataUser?.katalia_user.length === 0) {
@@ -77,6 +93,24 @@ export default function Dashboard() {
           </button>
         </Link>
       </section>
+      {dataSnippet?.katalia_snippet ? (
+        <div className='grid grid-cols-4'>
+          {dataSnippet?.katalia_snippet?.map((data) => (
+            <div className='snippet_card shadow-xl rounded-md flex flex-col m-3 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 h-28 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:text-white'>
+              <p className='font-bold px-6 text-base py-4 h-full  '>
+                <Link to={`/snippet/${data.id}`}>{data.title}</Link>
+              </p>
+              <div className='bg-gradient-to-l from-gray-700 via-gray-900 to-black'>
+                <p className='text-sm text-white p-2'>{data.username}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className=' flex justify-center items-center p-12'>
+          <div className='animate-spin rounded-full h-20 w-20 border-b-2 border-gray-900'></div>
+        </div>
+      )}
     </main>
   );
 }

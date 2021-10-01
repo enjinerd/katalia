@@ -13,7 +13,11 @@ export default function Snippet(props) {
   const { snip } = useParams();
   const { data, loading, error } = useQuery(GET_SPECIFIC_DATA, {
     variables: {
-      id: snip,
+      where: {
+        id: {
+          _eq: snip,
+        },
+      },
     },
   });
   const snippetRef = useRef();

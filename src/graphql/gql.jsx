@@ -11,8 +11,9 @@ export const GET_ALL_DATA = gql`
   }
 `;
 export const GET_SPECIFIC_DATA = gql`
-  query MyQuery($id: String!) {
-    katalia_snippet(where: { id: { _eq: $id } }) {
+  query MyQuery($where: katalia_snippet_bool_exp! = {}) {
+    katalia_snippet(where: $where) {
+      id
       desc
       snippet
       title
