@@ -3,8 +3,7 @@ import Header from '@/components/Header';
 import { useQuery } from '@apollo/client';
 import { GET_SPECIFIC_DATA } from '@/graphql/gql';
 import { useParams } from 'react-router';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { CopyBlock, dracula } from 'react-code-blocks';
 import useClipboard from 'react-use-clipboard';
 import { exportComponentAsJPEG } from 'react-component-export-image';
 import '@/pages/styles/Snippet.css';
@@ -17,7 +16,6 @@ export default function Snippet(props) {
       id: snip,
     },
   });
-  const [isCopied, setCopied] = useClipboard(data?.katalia_snippet[0].snippet);
   const snippetRef = useRef();
 
   useEffect(() => {
@@ -35,15 +33,6 @@ export default function Snippet(props) {
           </p>
           <div className='btn-group flex flex-row space-x-4 items-end'>
             <button
-              className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600'
-              onClick={() => {
-                setCopied();
-                toast.success('Code copied.');
-              }}
-            >
-              Copy
-            </button>
-            <button
               className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600 w-'
               onClick={() => exportComponentAsJPEG(snippetRef)}
             >
@@ -55,14 +44,13 @@ export default function Snippet(props) {
             ref={snippetRef}
           >
             <div className='snipp text-sm'>
-              <SyntaxHighlighter
+              <CopyBlock
+                text={data?.katalia_snippet[0].snippet}
                 language='javascript'
-                style={materialDark}
-                wrapLines
-                wrapLongLines
-              >
-                {data?.katalia_snippet[0].snippet}
-              </SyntaxHighlighter>
+                showLineNumbers
+                theme={dracula}
+                codeBlock
+              />
             </div>
           </section>{' '}
           <div className='flex flex-row text-left  text-white space-x-3 items-center justify-center'>

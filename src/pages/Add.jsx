@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Editor from 'react-simple-code-editor';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/nightOwl';
+
 import { useHistory } from 'react-router';
 import { useAuth } from '@/contexts/Auth';
 import { useLazyQuery, useMutation } from '@apollo/client';
@@ -17,7 +21,33 @@ export default function Add() {
   const [addSnippet] = useMutation(ADD_SNIPPET);
   const nanoid = customAlphabet('1234567890abcdefghxr', 5);
   const { username } = useSelector((state) => state.data);
+  const [code, setCode] = React.useState(
+    `function add(a, b) {\n  return a + b;\n}`
+  );
 
+  const highlight = (code) => (
+    <Highlight {...defaultProps} theme={theme} code={code} language='jsx'>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <>
+          {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </>
+      )}
+    </Highlight>
+  );
+  const styles = {
+    root: {
+      boxSizing: 'border-box',
+      fontFamily: '"Roboto Mono", "Fira Code", monospace',
+      fontWeight: '600',
+      ...theme.plain,
+    },
+  };
   const {
     register,
     getValues,
@@ -41,7 +71,6 @@ export default function Add() {
   const history = useHistory();
 
   const onSubmit = async (data) => {
-    const code = getValues('code');
     const title = getValues('title');
     const desc = getValues('desc');
     await addSnippet({
@@ -127,7 +156,14 @@ export default function Add() {
             <label htmlFor='input-code' className='font-bold text-dark'>
               Code
             </label>
-            <input
+            <Editor
+              value={code}
+              onValueChange={(code) => setCode(code)}
+              highlight={highlight}
+              padding={10}
+              style={styles.root}
+            />
+            {/* <input
               name='code'
               id='code'
               type='text'
@@ -141,7 +177,7 @@ export default function Add() {
               })}
               className={errors?.code && 'border border-red-500 bg-red-100'}
               defaultValue={getValues('code')}
-            />
+            /> */}
 
             {errors?.code && errors?.code.type == 'required' ? (
               <p tw='text-red-500 text-sm'>🚨 Cant be empty!</p>
