@@ -90,7 +90,7 @@ export default function Login() {
 
           <button
             type='submit'
-            className='disabled px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm text-lg md:text-xl'
+            className='disabled px-4 py-2 font-bold text-white bg-gradient-to-l from-green-200 via-green-300 to-blue-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm text-lg md:text-xl'
             disabled={isDisabled}
           >
             Login

@@ -20,12 +20,12 @@ export default function Header() {
       {user ? (
         <div className='space-x-4 font-secondary flex flex-row items-center justify-center '>
           <Link to='/dashboard'>
-            <button className='px-3 py-1 text-sm md:text-xl md:px-6 md:py-2 font-bold text-white capitalize bg-gradient-to-r from-green-200 via-green-400 to-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100'>
+            <button className='px-3 py-1 text-sm md:text-xl md:px-6 md:py-2 font-bold text-white capitalize bg-gradient-to-r from-indigo-300 to-purple-400 transition duration-500 transform hover:-translate-y-1 hover:scale-100'>
               Dashboard
             </button>
           </Link>
           <button
-            className=' px-2 py-1 text-sm md:text-xl  md:px-6 md:py-2 font-bold text-white bg-yellow-500 transition duration-500 transform hover:-translate-y-1  hover:bg-yellow-400'
+            className=' px-2 py-1 text-sm md:text-xl  md:px-6 md:py-2 font-bold text-white bg-gradient-to-r from-red-300 via-red-400 to-yellow-500 transition duration-500 transform hover:-translate-y-1  hover:bg-yellow-400'
             onClick={handleSignOut}
           >
             Sign Out
@@ -33,7 +33,7 @@ export default function Header() {
         </div>
       ) : (
         <Link to='/login'>
-          <button className='px-6 py-2 font-bold text-white capitalize bg-gradient-to-r from-green-200 via-green-400 to-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 md:text-xl md:mr-5'>
+          <button className='px-6 py-2 font-bold text-white capitalize bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 transition duration-500 transform hover:-translate-y-1 hover:scale-100 md:text-xl md:mr-5'>
             Login
           </button>
         </Link>

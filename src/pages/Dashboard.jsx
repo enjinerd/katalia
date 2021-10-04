@@ -94,27 +94,28 @@ function Dashboard() {
             </button>
           </Link>
         </div>
-      </section>
-      {dataSnippet?.katalia_snippet ? (
-        <div className='grid grid-cols-2 md:grid-cols-4'>
-          {dataSnippet?.katalia_snippet?.map((data) => (
-            <div className='snippet_card shadow-xl rounded-md flex flex-col m-3 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 h-28 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:text-white'>
-              <p className='font-bold px-6 text-sm md:text-base py-4 h-full font-primary '>
-                <Link to={`/snippet/${data.id}`}>{data.title}</Link>
-              </p>
-              <div className='bg-gradient-to-l from-gray-700 via-gray-900 to-black'>
-                <p className='text-sm md:text-base text-white p-2 font-dm'>
-                  {data.username}
+
+        {dataSnippet?.katalia_snippet ? (
+          <div className='grid grid-cols-2 md:grid-cols-4 '>
+            {dataSnippet?.katalia_snippet?.map((data) => (
+              <div className='snippet_card shadow-xl rounded-md flex flex-col m-3 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 h-28 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:text-white'>
+                <p className='font-bold px-6 text-sm md:text-base py-4 h-full font-primary '>
+                  <Link to={`/snippet/${data.id}`}>{data.title}</Link>
                 </p>
+                <div className='bg-gradient-to-l from-gray-700 via-gray-900 to-black'>
+                  <p className='text-sm md:text-base text-white p-2 font-dm'>
+                    {data.username}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className=' flex justify-center items-center p-12'>
-          <div className='animate-spin rounded-full h-20 w-20 border-b-2 border-gray-900'></div>
-        </div>
-      )}
+            ))}
+          </div>
+        ) : (
+          <div className=' flex justify-center items-center p-12'>
+            <div className='animate-spin rounded-full h-20 w-20 border-b-2 border-gray-900'></div>
+          </div>
+        )}
+      </section>
     </main>
   );
 }

@@ -71,7 +71,7 @@ export default function Signup() {
 
           <button
             type='submit'
-            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 font-dm text-lg md:text-xl'
+            className='px-4 py-2 font-bold text-white bg-gradient-to-l from-green-200 via-green-300 to-blue-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 font-dm text-lg md:text-xl'
           >
             Sign up
           </button>

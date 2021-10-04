@@ -7,6 +7,9 @@ import Dashboard from '@/routes/Dashboard';
 import { AuthProvider } from '@/contexts/Auth';
 import { PrivateRoute } from './PrivateRoute';
 import { nanoid } from 'nanoid';
+import NotFound from '@/pages/NotFound';
+import Verified from '@/pages/Verified';
+
 export default function Routes() {
   return (
     <Router>
@@ -21,6 +24,8 @@ export default function Routes() {
           <Route path='/login' component={Login} />
           <Route path='/snippet' component={Snip} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
+          <Route path='/verified' component={Verified} />
+          <Route path='/*' component={NotFound} />
         </Switch>
       </AuthProvider>
     </Router>
