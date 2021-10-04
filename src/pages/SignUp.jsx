@@ -51,12 +51,18 @@ export default function Signup() {
           onSubmit={handleSubmit}
           className='flex flex-col space-y-4 w-full'
         >
-          <label htmlFor='input-email' className='font-bold text-dark'>
+          <label
+            htmlFor='input-email'
+            className='font-bold text-dark text-lg md:text-xl font-secondary'
+          >
             Email
           </label>
           <input id='input-email' type='email' ref={emailRef} />
 
-          <label htmlFor='input-password' className='font-bold text-dark'>
+          <label
+            htmlFor='input-password'
+            className='font-bold text-dark text-lg md:text-xl font-secondary'
+          >
             Password
           </label>
           <input id='input-password' type='password' ref={passwordRef} />
@@ -65,12 +71,12 @@ export default function Signup() {
 
           <button
             type='submit'
-            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400'
+            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 font-dm text-lg md:text-xl'
           >
             Sign up
           </button>
         </form>
-        <p>
+        <p className='font-dm md:text-lg'>
           Already have an account?{' '}
           <Link to='/login' className='font-bold text-dark'>
             Log In

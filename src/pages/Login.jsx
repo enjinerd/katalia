@@ -56,17 +56,27 @@ export default function Login() {
           onSubmit={handleSubmit}
           className='flex flex-col space-y-4 w-full'
         >
-          <label htmlFor='input-email' className='font-bold text-dark'>
+          <label
+            htmlFor='input-email'
+            className='font-bold text-dark font-secondary text-lg md:text-xl'
+          >
             Email
           </label>
           <input
             id='input-email'
             type='email'
             ref={emailRef}
-            className={error.isError && 'border border-red-500 bg-red-100'}
+            className={
+              'font-dm' +
+              (error.isError &&
+                'border border-red-500 bg-red-100' + 'font-secondary')
+            }
           />
 
-          <label htmlFor='input-password' className='font-bold text-dark'>
+          <label
+            htmlFor='input-password'
+            className='font-bold text-dark text-lg md:text-xl font-secondary'
+          >
             Password
           </label>
           <input
@@ -80,13 +90,13 @@ export default function Login() {
 
           <button
             type='submit'
-            className='disabled px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
+            className='disabled px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm text-lg md:text-xl'
             disabled={isDisabled}
           >
             Login
           </button>
         </form>
-        <p>
+        <p className='font-dm md:text-lg'>
           Don't have an account?{' '}
           <Link to='/signup' className='font-bold text-dark'>
             Sign Up

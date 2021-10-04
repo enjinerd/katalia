@@ -74,7 +74,10 @@ export default function Dashboard() {
         <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
           <form className='flex flex-col space-y-4 w-full'>
             <div className='flex flex-col space-y-2'>
-              <label htmlFor='username' className='font-bold text-dark'>
+              <label
+                htmlFor='username'
+                className='font-bold text-dark font-secondary text-xl'
+              >
                 Username
               </label>
               <input
@@ -90,7 +93,8 @@ export default function Dashboard() {
                   minLength: { value: 5, message: '9 char min' },
                 })}
                 className={
-                  errors?.username && 'border border-red-500 bg-red-100'
+                  (errors?.username && 'border border-red-500 bg-red-100') +
+                  'font-dm'
                 }
                 defaultValue={dataUser?.katalia_user[0].username}
               />
@@ -103,7 +107,7 @@ export default function Dashboard() {
               <br />
               <button
                 type='submit'
-                className='disabled px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
+                className='disabled px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm text-lg md:text-xl'
                 disabled={isDisabled}
                 onClick={handleSubmit(onSubmit)}
               >

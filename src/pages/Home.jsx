@@ -15,11 +15,11 @@ export default function Home() {
           <section className='content  p-6 space-y-8 mt-8'>
             <div className='flex flex-row space-x-4 items-center justify-center'>
               <input
-                className=' border-gray-200'
+                className=' border-gray-200 font-secondary text-lg md:text-xl'
                 type='text'
                 placeholder='Search snippet...'
               />
-              <button className='px-6 py-2 font-bold text-white uppercase bg-green-500'>
+              <button className='px-6 py-2 font-bold text-white uppercase bg-green-500 font-dm text-lg'>
                 Cari
               </button>
             </div>
@@ -31,7 +31,7 @@ export default function Home() {
                       <Link to={`/snippet/${data.id}`}>{data.title}</Link>
                     </p>
                     <div className='bg-gradient-to-l from-gray-700 via-gray-900 to-black '>
-                      <p className='text-sm text-white p-2 font-secondary'>
+                      <p className='text-sm md:text-base font-bold text-white p-2 font-dm'>
                         {data.username}
                       </p>
                     </div>

@@ -76,13 +76,13 @@ function Dashboard() {
     <main className='flex flex-col min-h-screen'>
       <Header />
       <section className='content  p-6 space-y-8 mt-3 flex flex-col items-center justify-center'>
-        <p className='text-lg'>
-          Hello{' '}
+        <p className='text-2xl font-secondary'>
+          Hello,{' '}
           <span className='font-bold'>
             {dataUser?.katalia_user[0].username}
           </span>
         </p>
-        <div className='flex flex-row space-x-3'>
+        <div className='flex flex-row space-x-3 font-dm'>
           <Link to='/dashboard/add'>
             <button className='px-4 py-2 font-bold text-white bg-blue-500 transition duration-500 transform hover:-translate-y-1  hover:bg-blue-400'>
               Add Snippet
@@ -103,7 +103,9 @@ function Dashboard() {
                 <Link to={`/snippet/${data.id}`}>{data.title}</Link>
               </p>
               <div className='bg-gradient-to-l from-gray-700 via-gray-900 to-black'>
-                <p className='text-sm text-white p-2'>{data.username}</p>
+                <p className='text-sm md:text-base text-white p-2 font-dm'>
+                  {data.username}
+                </p>
               </div>
             </div>
           ))}

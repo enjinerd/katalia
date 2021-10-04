@@ -100,7 +100,7 @@ export default function Snippet(props) {
         <section className='content  p-12 space-y-6 flex flex-col items-center'>
           {isVisible ? (
             <input
-              className='text-2xl font-bold p-2'
+              className='text-2xl font-bold p-2 font-secondary'
               name='title'
               id='title'
               type='text'
@@ -112,11 +112,11 @@ export default function Snippet(props) {
               onChange={() => setDisabled(false)}
             />
           ) : (
-            <p className='font-bold text-2xl capitalize'>
+            <p className='font-bold text-2xl capitalize font-secondary'>
               {data?.katalia_snippet_by_pk.title}
             </p>
           )}
-          <div className='btn-group flex flex-row space-x-4 items-end'>
+          <div className='btn-group flex flex-row space-x-4 items-end font-dm'>
             {!isVisible && (
               <button
                 className='px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white capitalize bg-green-600 w-'
@@ -157,7 +157,7 @@ export default function Snippet(props) {
             </div>
           </div>
           {isVisible && (
-            <p className='text-base font-bold text-blue-600'>
+            <p className='text-base font-bold text-blue-600 font-secondary'>
               Click code area to edit this snippet
             </p>
           )}
@@ -186,18 +186,18 @@ export default function Snippet(props) {
             </div>
           </section>{' '}
           <div className='flex flex-row text-left  text-white space-x-3 items-center justify-center'>
-            <p className='font-bold text-lg rounded-lg px-3 py-2 bg-dark'>
+            <p className='font-bold text-lg rounded-lg px-3 py-2 bg-dark font-secondary'>
               {data?.katalia_snippet_by_pk.username}
             </p>
             <button
-              className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600'
+              className='px-4 py-2 font-bold text-white capitalize bg-green-600 text-lg md:text-xl font-dm'
               onClick={() => exportComponentAsJPEG(snippetRef)}
             >
               Up
             </button>
             <p className='text-dark font-bold'> 15</p>
             <button
-              className='px-4 text-sm py-2 font-bold text-white capitalize bg-red-600'
+              className='px-4 py-2 font-bold text-white capitalize bg-red-600 text-lg md:text-xl font-dm'
               onClick={() => exportComponentAsJPEG(snippetRef)}
             >
               Down

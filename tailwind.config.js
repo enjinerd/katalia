@@ -9,6 +9,7 @@ module.exports = {
       fontFamily: {
         primary: ['Space Mono', ...fontFamily.mono],
         secondary: ['Space Grotesk', ...fontFamily.sans],
+        dm: ['DM Sans', ...fontFamily.sans],
       },
       colors: {
         primary: {
