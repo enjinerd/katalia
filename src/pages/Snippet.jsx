@@ -119,7 +119,7 @@ export default function Snippet(props) {
           <div className='btn-group flex flex-row space-x-4 items-end'>
             {!isVisible && (
               <button
-                className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600 w-'
+                className='px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white capitalize bg-green-600 w-'
                 onClick={() => exportComponentAsJPEG(snippetRef)}
               >
                 Export as Image
@@ -129,7 +129,7 @@ export default function Snippet(props) {
             <div className='space-x-3'>
               {isEditor && (
                 <button
-                  className='px-4 text-sm py-2 font-bold text-white capitalize bg-green-600 w-'
+                  className='px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white capitalize bg-green-600 w-'
                   onClick={() => {
                     setVisible(!isVisible);
                     setDisabled(true);
@@ -140,7 +140,7 @@ export default function Snippet(props) {
               )}
               {isVisible && (
                 <button
-                  className='disabled px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
+                  className='disabled px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
                   disabled={isDisabled}
                   onClick={handleSubmit(handleUpdate)}
                 >

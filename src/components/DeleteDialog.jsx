@@ -16,7 +16,7 @@ export default function DeleteDialog({ isOpen, setOpen, handleDelete }) {
       <button
         type='button'
         onClick={openModal}
-        className='disabled px-4 py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed'
+        className='disabled px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed'
       >
         Delete Snippet
       </button>
