@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <main>
       <Header />
-      <section className='layout w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
+      <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
         {error.isError && (
           <p className='text-lg font-bold text-red-500'>{error.message}</p>
         )}

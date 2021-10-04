@@ -46,7 +46,7 @@ export default function Signup() {
   return (
     <main>
       <Header />
-      <section className='layout w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
+      <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
         <form
           onSubmit={handleSubmit}
           className='flex flex-col space-y-4 w-full'
