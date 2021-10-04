@@ -5,7 +5,6 @@
 .snipp {
   @apply w-full;
   font-family: 'Space Mono NL';
-
   white-space: pre-wrap;
 }
 .snipp span {

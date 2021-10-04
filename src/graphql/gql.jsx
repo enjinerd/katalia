@@ -11,10 +11,25 @@ export const GET_ALL_DATA = gql`
   }
 `;
 export const GET_SPECIFIC_DATA = gql`
+  query MyQuery($id: String!) {
+    katalia_snippet_by_pk(id: $id) {
+      Snip_REL_aggregate {
+        nodes {
+          email
+        }
+      }
+      username
+      title
+      snippet
+      desc
+    }
+  }
+`;
+
+export const GET_USER_SNIPPET_DATA = gql`
   query MyQuery($where: katalia_snippet_bool_exp! = {}) {
     katalia_snippet(where: $where) {
       id
-      desc
       snippet
       title
       username
@@ -60,6 +75,41 @@ export const ADD_SNIPPET = gql`
         id: $id
       }
     ) {
+      title
+    }
+  }
+`;
+
+export const UPDATE_USERNAME = gql`
+  mutation MyMutation($prevUsername: String!, $usernameUpdate: String!) {
+    update_katalia_user_by_pk(
+      pk_columns: { username: $prevUsername }
+      _set: { username: $usernameUpdate }
+    ) {
+      username
+    }
+  }
+`;
+
+export const UPDATE_SNIPPET = gql`
+  mutation MyMutation(
+    $id: String!
+    $updatedSnippet: String = ""
+    $updatedTitle: String = ""
+  ) {
+    update_katalia_snippet_by_pk(
+      pk_columns: { id: $id }
+      _set: { snippet: $updatedSnippet, title: $updatedTitle }
+    ) {
+      snippet
+      title
+    }
+  }
+`;
+
+export const DELETE_SNIPPET = gql`
+  mutation MyMutation($id: String!) {
+    delete_katalia_snippet_by_pk(id: $id) {
       title
     }
   }

@@ -2,22 +2,25 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home, Login, SignUp } from '@/pages/';
 import Snip from '@/routes/Snip';
+import Dashboard from '@/routes/Dashboard';
+
 import { AuthProvider } from '@/contexts/Auth';
 import { PrivateRoute } from './PrivateRoute';
-import Dashboard from '@/pages/Dashboard';
-import Add from '@/pages/Add';
-
+import { nanoid } from 'nanoid';
 export default function Routes() {
   return (
     <Router>
       <AuthProvider>
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route
+            exact
+            path='/'
+            render={(props) => <Home {...props} key={nanoid(5)} />}
+          />
           <Route path='/signup' component={SignUp} />
           <Route path='/login' component={Login} />
           <Route path='/snippet' component={Snip} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
-          <PrivateRoute path='/add' component={Add} />
         </Switch>
       </AuthProvider>
     </Router>

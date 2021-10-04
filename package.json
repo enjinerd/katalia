@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.13",
+    "@headlessui/react": "^1.4.1",
     "@reduxjs/toolkit": "1.6.0",
     "@supabase/supabase-js": "^1.23.0",
     "@supabase/ui": "^0.35.0",

@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/Auth';
+import { useDispatch } from 'react-redux';
+import { setUsername } from '@/store/globalSlice';
 
 export default function Header() {
+  const dispatch = useDispatch();
   const { user, signOut } = useAuth();
   async function handleSignOut() {
+    dispatch(setUsername(''));
     await signOut();
   }
 

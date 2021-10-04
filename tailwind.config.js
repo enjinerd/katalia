@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Inter', ...fontFamily.sans],
+        primary: ['Space Mono', ...fontFamily.mono],
+        secondary: ['Space Grotesk', ...fontFamily.sans],
       },
       colors: {
         primary: {

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, withRouter } from 'react-router';
 import { useAuth } from '@/contexts/Auth';
 import {
   GET_SPESIFIC_USER,
   REGISTER_USER,
-  GET_SPECIFIC_DATA,
+  GET_USER_SNIPPET_DATA,
 } from '@/graphql/gql';
 import * as unsullied from 'unsullied';
 import { customAlphabet } from 'nanoid';
@@ -15,7 +15,7 @@ import { setUsername } from '@/store/globalSlice';
 
 import Header from '@/components/Header';
 
-export default function Dashboard() {
+function Dashboard() {
   const globalState = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -24,8 +24,9 @@ export default function Dashboard() {
   const [getSpecificUser, { data: dataUser, error }] =
     useLazyQuery(GET_SPESIFIC_USER);
 
-  const [getSpecificData, { data: dataSnippet }] =
-    useLazyQuery(GET_SPECIFIC_DATA);
+  const [getSpecificData, { data: dataSnippet }] = useLazyQuery(
+    GET_USER_SNIPPET_DATA
+  );
 
   const nanoid = customAlphabet('1234567890abcdef', 4);
   const name = unsullied();
@@ -34,14 +35,6 @@ export default function Dashboard() {
   const { user, signOut } = useAuth();
 
   const history = useHistory();
-
-  async function handleSignOut() {
-    // Ends user session
-    await signOut();
-
-    // Redirects the user to Login page
-    history.push('/login');
-  }
 
   useEffect(() => {
     getSpecificUser({
@@ -55,7 +48,9 @@ export default function Dashboard() {
     });
 
     if (dataUser?.katalia_user[0].username) {
-      dispatch(setUsername(dataUser?.katalia_user[0].username));
+      if (globalState.data.username === '') {
+        dispatch(setUsername(dataUser?.katalia_user[0].username));
+      }
       getSpecificData({
         variables: {
           where: {
@@ -87,11 +82,18 @@ export default function Dashboard() {
             {dataUser?.katalia_user[0].username}
           </span>
         </p>
-        <Link to='/add'>
-          <button className='px-4 py-2 font-bold text-white bg-blue-500 transition duration-500 transform hover:-translate-y-1  hover:bg-blue-400'>
-            Add Snippet
-          </button>
-        </Link>
+        <div className='flex flex-row space-x-3'>
+          <Link to='/dashboard/add'>
+            <button className='px-4 py-2 font-bold text-white bg-blue-500 transition duration-500 transform hover:-translate-y-1  hover:bg-blue-400'>
+              Add Snippet
+            </button>
+          </Link>
+          <Link to='/dashboard/settings'>
+            <button className='px-4 py-2 font-bold text-white bg-blue-500 transition duration-500 transform hover:-translate-y-1  hover:bg-blue-400'>
+              User Settings
+            </button>
+          </Link>
+        </div>
       </section>
       {dataSnippet?.katalia_snippet ? (
         <div className='grid grid-cols-4'>
@@ -114,3 +116,5 @@ export default function Dashboard() {
     </main>
   );
 }
+
+export default withRouter(Dashboard);

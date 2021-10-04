@@ -48,23 +48,12 @@ export default function Add() {
       ...theme.plain,
     },
   };
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-    setFocus,
-  } = useForm({
+  const { register, getValues, handleSubmit, errors } = useForm({
     defaultValues: {
       code: '',
       name: '',
     },
   });
-  const watchCodeFields = watch('code'); // you can also target specific fields by their names
-
-  const [isVisible, setVisible] = useState(false);
 
   // Get current user and signOut function from context
   const { user, signOut } = useAuth();
@@ -90,33 +79,12 @@ export default function Add() {
     }
     console.log(username);
   }, [errors]);
+
   return (
     <main className='flex flex-col min-h-screen'>
       <Header />
       <section className='layout w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
-        {isVisible && (
-          <section className='font-semibold flex items-center p-6 justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 w-full shadow-xl'>
-            <div className='snipp text-sm'>
-              <SyntaxHighlighter
-                language='javascript'
-                style={materialDark}
-                wrapLines
-                wrapLongLines
-              >
-                {watchCodeFields}
-              </SyntaxHighlighter>
-            </div>
-          </section>
-        )}
         <section className='flex flex-row items-end justify-end space-x-3'>
-          {' '}
-          <button
-            type='submit'
-            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
-            onClick={() => setVisible(!isVisible)}
-          >
-            {isVisible ? 'Close Preview' : 'Preview'}
-          </button>
           <button
             type='submit'
             className='px-4 py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed'
@@ -163,22 +131,6 @@ export default function Add() {
               padding={10}
               style={styles.root}
             />
-            {/* <input
-              name='code'
-              id='code'
-              type='text'
-              {...register('code', {
-                required: 'Required',
-                maxLength: {
-                  value: 55,
-                  message: '55 char max',
-                },
-                minLength: { value: 15, message: '15 char min' },
-              })}
-              className={errors?.code && 'border border-red-500 bg-red-100'}
-              defaultValue={getValues('code')}
-            /> */}
-
             {errors?.code && errors?.code.type == 'required' ? (
               <p tw='text-red-500 text-sm'>🚨 Cant be empty!</p>
             ) : null}
