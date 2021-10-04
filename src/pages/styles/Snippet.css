@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 .snipp {
-  @apply w-full;
-  font-family: 'Space Mono NL';
+  @apply w-full font-primary text-sm md:text-base;
   white-space: pre-wrap;
 }
 .snipp span {
