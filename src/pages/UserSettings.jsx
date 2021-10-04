@@ -71,7 +71,7 @@ export default function Dashboard() {
     <main className='flex flex-col min-h-screen'>
       <Header />
       <section className='content  p-6 space-y-8 mt-3 flex flex-col items-center justify-center'>
-        <section className='layout w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
+        <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
           <form className='flex flex-col space-y-4 w-full'>
             <div className='flex flex-col space-y-2'>
               <label htmlFor='username' className='font-bold text-dark'>

@@ -83,7 +83,7 @@ export default function Add() {
   return (
     <main className='flex flex-col min-h-screen'>
       <Header />
-      <section className='layout w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
+      <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
         <section className='flex flex-row items-end justify-end space-x-3'>
           <button
             type='submit'
