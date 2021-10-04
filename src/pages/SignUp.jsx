@@ -4,40 +4,44 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { useAuth } from '@/contexts/Auth';
 import Header from '@/components/Header';
+import { useForm } from 'react-hook-form';
 
 export default function Signup() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [isDisabled, setDisabled] = useState(false);
 
-  const [error, setError] = useState({
-    isError: false,
-    message: '',
+  const { register, getValues, handleSubmit, errors } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
+
+  const [isError, setError] = useState(null);
 
   // Get signUp function from the auth context
   const { signUp } = useAuth();
 
   const history = useHistory();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function onSubmit() {
+    setDisabled(true);
 
     // Get email and password input values
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    const email = getValues('email');
+    const password = getValues('password');
 
     // Calls `signUp` function from the context
     const { error: errorSignUp } = await signUp({ email, password });
 
     if (errorSignUp) {
-      setError({
-        isError: true,
-        message: errorSignUp.message,
-      });
-      toast.error(error.message);
-      console.log(error.message);
+      setError(
+        'The email has already been registered, try changing it with another email!'
+      );
+      toast.error(isError);
+      setDisabled(false);
+
+      console.log(errorSignUp.message);
     } else {
-      console.log(username);
       // Redirect user to Dashboard
       history.push('/dashboard');
     }
@@ -47,33 +51,63 @@ export default function Signup() {
     <main>
       <Header />
       <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
-        <form
-          onSubmit={handleSubmit}
-          className='flex flex-col space-y-4 w-full'
-        >
-          <label
-            htmlFor='input-email'
-            className='font-bold text-dark text-lg md:text-xl font-secondary'
-          >
-            Email
-          </label>
-          <input id='input-email' type='email' ref={emailRef} />
-
-          <label
-            htmlFor='input-password'
-            className='font-bold text-dark text-lg md:text-xl font-secondary'
-          >
-            Password
-          </label>
-          <input id='input-password' type='password' ref={passwordRef} />
-
+        {isError && (
+          <p className='md:text-xl text-lg font-bold text-red-500 font-dm'>
+            {isError}
+          </p>
+        )}
+        <form className='flex flex-col space-y-4 w-full'>
+          <div className='flex flex-col space-y-2'>
+            <label
+              htmlFor='email'
+              className='font-bold text-dark font-secondary text-lg md:text-xl'
+            >
+              Email
+            </label>
+            <input
+              id='email'
+              type='email'
+              {...register('email', {
+                required: 'Email required',
+              })}
+              className={
+                'font-dm' +
+                (errors?.email &&
+                  'border border-red-500 bg-red-100' + 'font-secondary')
+              }
+            />
+            {errors?.email && errors?.code.email == 'required' ? (
+              <p tw='text-red-500 text-sm'>🚨 Cant be empty!</p>
+            ) : null}
+          </div>
+          <div className='flex flex-col space-y-2'>
+            <label
+              htmlFor='password'
+              className='font-bold text-dark text-lg md:text-xl font-secondary'
+            >
+              Password
+            </label>
+            <input
+              id='password'
+              type='password'
+              {...register('password', {
+                required: 'Password required',
+              })}
+              className={errors?.password && 'border border-red-500 bg-red-100'}
+            />
+            {errors?.password && errors?.password.type == 'required' ? (
+              <p tw='text-red-500 text-sm'>🚨 Cant be empty!</p>
+            ) : null}
+          </div>
           <br />
 
           <button
             type='submit'
-            className='px-4 py-2 font-bold text-white bg-gradient-to-l from-green-200 via-green-300 to-blue-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 font-dm text-lg md:text-xl'
+            className='disabled px-4 py-2 font-bold text-white bg-gradient-to-r from-green-400 via-yellow-400 to-pink-400 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm text-lg md:text-xl'
+            disabled={isDisabled}
+            onClick={handleSubmit(onSubmit)}
           >
-            Sign up
+            Sign Up
           </button>
         </form>
         <p className='font-dm md:text-lg'>
