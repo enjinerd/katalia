@@ -31,6 +31,8 @@ export function AuthProvider({ children }) {
     signUp: (data) => supabase.auth.signUp(data),
     signIn: (data) => supabase.auth.signIn(data),
     signOut: () => supabase.auth.signOut(),
+    forgetPass: (data) => supabase.auth.api.resetPasswordForEmail(data),
+    updatePass: (token, data) => supabase.auth.api.updateUser(token, data),
     user,
   };
 

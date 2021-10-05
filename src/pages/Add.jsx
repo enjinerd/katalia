@@ -70,6 +70,10 @@ export default function Add() {
         desc,
         username,
       },
+    }).then(() => {
+      toast.success('Snippet added successfully');
+      reset();
+      history.go(0);
     });
   };
 

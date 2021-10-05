@@ -46,10 +46,23 @@ export default function Login() {
       <Header />
       <section className='layout md:w-2/4 p-16 space-y-6 flex flex-col items-center justify-center'>
         {isError && (
-          <p className='md:text-xl text-lg font-dm font-bold text-red-500'>
-            {isError}
-          </p>
-        )}
+          <div className='flex flex-col items-center space-y-3'>
+            <p className='md:text-xl text-lg font-dm font-bold text-red-500'>
+              {isError}
+            </p>
+            <Link to='/forget-password'>
+              <p className='md:text-lg font-secondary text-white  rounded-lg font-extrabold px-2 py-1 bg-yellow-600 hover:bg-yellow-500'>
+                Forget Password?
+              </p>
+            </Link>
+          </div>
+        )}{' '}
+        <p className='font-dm md:text-lg'>
+          Forget Password?{' '}
+          <Link to='/forget-password' className='font-bold text-dark'>
+            Forget
+          </Link>
+        </p>
         <form className='flex flex-col space-y-4 w-full'>
           <div className='flex flex-col space-y-2'>
             <label

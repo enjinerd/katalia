@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory, withRouter } from 'react-router';
+import { withRouter, useLocation } from 'react-router';
 import { useAuth } from '@/contexts/Auth';
 import {
   GET_SPESIFIC_USER,
@@ -34,8 +34,6 @@ function Dashboard() {
   // Get current user and signOut function from context
   const { user, signOut } = useAuth();
 
-  const history = useHistory();
-
   useEffect(() => {
     getSpecificUser({
       variables: {
@@ -62,7 +60,7 @@ function Dashboard() {
       });
     }
 
-    if (dataUser?.katalia_user.length === 0) {
+    if (!dataUser?.katalia_user.username) {
       addUsername({
         variables: {
           username: name + nanoid(),
@@ -79,7 +77,7 @@ function Dashboard() {
         <p className='text-2xl font-secondary'>
           Hello,{' '}
           <span className='font-bold'>
-            {dataUser?.katalia_user[0].username}
+            {dataUser?.katalia_user[0]?.username}
           </span>
         </p>
         <div className='flex flex-row space-x-3 font-dm'>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_DATA } from '@/graphql/gql';
 import Header from '@/components/Header';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import '@/pages/styles/Home.css';
 import { AnimatedInput } from '@/components/AnimatedInput';
 import Fuse from 'fuse.js';
@@ -17,6 +17,8 @@ export default function Home() {
   };
   const [fuzzyData, setFuzzy] = useState('');
   const [isFuzzy, setIsFuzzy] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
 
   const fuse = new Fuse(data?.katalia_snippet, options);
 
@@ -33,7 +35,9 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log(data);
+    if (location.hash.split('&').includes('type=recovery')) {
+      history.push('/forget-password' + location.hash.split('&')[0]);
+    }
   }, [data]);
   return (
     <>

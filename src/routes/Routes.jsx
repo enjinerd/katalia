@@ -1,14 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, Login, SignUp } from '@/pages/';
+import { Home, Login, SignUp, NotFound, Welcome, ForgetPass } from '@/pages/';
 import Snip from '@/routes/Snip';
 import Dashboard from '@/routes/Dashboard';
 
 import { AuthProvider } from '@/contexts/Auth';
 import { PrivateRoute } from './PrivateRoute';
 import { nanoid } from 'nanoid';
-import NotFound from '@/pages/NotFound';
-import Verified from '@/pages/Verified';
 
 export default function Routes() {
   return (
@@ -24,7 +22,8 @@ export default function Routes() {
           <Route path='/login' component={Login} />
           <Route path='/snippet' component={Snip} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
-          <Route path='/verified' component={Verified} />
+          <PrivateRoute path='/welcome' component={Welcome} />
+          <Route path='/forget-password' component={ForgetPass} />
           <Route path='/*' component={NotFound} />
         </Switch>
       </AuthProvider>
