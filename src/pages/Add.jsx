@@ -43,12 +43,12 @@ export default function Add() {
   const styles = {
     root: {
       boxSizing: 'border-box',
-      fontFamily: '"Roboto Mono", "Fira Code", monospace',
+      fontFamily: '"Space Mono", "Fira Code", monospace',
       fontWeight: '600',
       ...theme.plain,
     },
   };
-  const { register, getValues, handleSubmit, errors } = useForm({
+  const { register, getValues, handleSubmit, errors, reset } = useForm({
     defaultValues: {
       code: '',
       name: '',
@@ -73,6 +73,11 @@ export default function Add() {
     });
   };
 
+  const handleReset = () => {
+    reset('');
+    setCode('');
+  };
+
   useEffect(() => {
     if (errors) {
       console.log(errors);
@@ -87,14 +92,18 @@ export default function Add() {
         <section className='flex flex-row items-end justify-end space-x-3'>
           <button
             type='submit'
-            className='px-4 py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed'
+            className='px-4 py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm md:text-lg'
+            onClick={handleReset}
           >
             Reset
           </button>
         </section>
         <form className='flex flex-col space-y-4 w-full'>
           <div className='flex flex-col space-y-2'>
-            <label htmlFor='input-title' className='font-bold text-dark'>
+            <label
+              htmlFor='input-title'
+              className='font-bold text-dark text-lg md:text-xl font-secondary'
+            >
               Title
             </label>
             <input
@@ -121,7 +130,10 @@ export default function Add() {
             ) : null}
           </div>
           <div className='flex flex-col space-y-2'>
-            <label htmlFor='input-code' className='font-bold text-dark'>
+            <label
+              htmlFor='input-code'
+              className='font-bold text-dark text-lg md:text-xl font-secondary'
+            >
               Code
             </label>
             <Editor
@@ -138,21 +150,10 @@ export default function Add() {
               <p tw='text-red-500 text-sm'>🚨 {errors?.code.message}!</p>
             ) : null}
           </div>{' '}
-          <div className='flex flex-col space-y-2'>
-            <label htmlFor='input-desc' className='font-bold text-dark'>
-              Description
-            </label>
-            <textarea
-              name='desc'
-              id='input-desc'
-              type='text'
-              {...register('desc')}
-            />
-          </div>
           <br />
           <button
             type='submit'
-            className='px-4 py-2 font-bold text-white bg-green-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed'
+            className='px-4 py-2 font-bold text-white bg-gradient-to-r from-green-400 via-yellow-400 to-pink-400 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed font-dm md:text-lg'
             onClick={handleSubmit(onSubmit)}
           >
             Submit

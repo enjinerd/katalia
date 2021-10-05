@@ -4,9 +4,13 @@ import { GET_ALL_DATA } from '@/graphql/gql';
 import Header from '@/components/Header';
 import { Link } from 'react-router-dom';
 import '@/pages/styles/Home.css';
+import { AnimatedInput } from '@/components/AnimatedInput';
 
 export default function Home() {
   const { data } = useQuery(GET_ALL_DATA);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <>
       <main>
@@ -14,11 +18,7 @@ export default function Home() {
           <Header />
           <section className='content  p-6 space-y-8 mt-8'>
             <div className='flex flex-row space-x-4 items-center justify-center'>
-              <input
-                className=' border-gray-200 font-secondary text-lg md:text-xl'
-                type='text'
-                placeholder='Search snippet...'
-              />
+              <AnimatedInput placeholder='Search snippet...' />
               <button className='px-6 py-2 font-bold text-white uppercase bg-green-500 font-dm text-lg'>
                 Cari
               </button>

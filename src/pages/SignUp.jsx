@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 
 export default function Signup() {
   const [isDisabled, setDisabled] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const { register, getValues, handleSubmit, errors } = useForm({
     defaultValues: {
@@ -42,8 +43,7 @@ export default function Signup() {
 
       console.log(errorSignUp.message);
     } else {
-      // Redirect user to Dashboard
-      history.push('/dashboard');
+      setSuccess(true);
     }
   }
 
@@ -54,6 +54,12 @@ export default function Signup() {
         {isError && (
           <p className='md:text-xl text-lg font-bold text-red-500 font-dm'>
             {isError}
+          </p>
+        )}
+        {success && (
+          <p className='md:text-xl text-lg font-bold text-green-500 font-dm'>
+            Thank you for registering, please check your email to confirm
+            registration
           </p>
         )}
         <form className='flex flex-col space-y-4 w-full'>

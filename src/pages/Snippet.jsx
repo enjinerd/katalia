@@ -15,7 +15,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '@/contexts/Auth';
 import EditorCode from '@/components/Editor';
 import { useForm, useFormState } from 'react-hook-form';
-import DeleteDialog from '@/components/DeleteDialog';
+import ConfirmDialog from '@/components/ConfirmDialog';
 
 export default function Snippet(props) {
   const { snip } = useParams();
@@ -65,7 +65,7 @@ export default function Snippet(props) {
       });
   };
 
-  const handleDelete = () => {
+  const handleConfirm = () => {
     setOpen(!isOpen);
     deleteSnippet({
       variables: {
@@ -148,18 +148,24 @@ export default function Snippet(props) {
                 </button>
               )}
               {isVisible && (
-                <DeleteDialog
+                <ConfirmDialog
                   isOpen={isOpen}
                   setOpen={setOpen}
-                  handleDelete={handleDelete}
+                  handleConfirm={handleConfirm}
+                  title='Delete Snippet?'
+                  message='Are you sure you want to delete this snippet?'
+                  titleAction='Delete Snippet'
+                  className='disabled px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed'
                 />
               )}
             </div>
           </div>
           {isVisible && (
-            <p className='text-base font-bold text-blue-600 font-secondary'>
-              Click code area to edit this snippet
-            </p>
+            <div className='px-3 py-1 bg-gradient-to-tr from-blue-500 via-blue-400 to-blue-600'>
+              <p className='text-base font-bold text-white font-secondary'>
+                Click code area to edit this snippet
+              </p>
+            </div>
           )}
           <section
             className='font-medium flex items-center p-6 justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 md:w-2/4 shadow-xl'

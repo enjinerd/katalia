@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/Auth';
 import { useDispatch } from 'react-redux';
 import { setUsername } from '@/store/globalSlice';
+import ConfirmDialog from './ConfirmDialog';
 
 export default function Header() {
+  const [isOpen, setOpen] = useState(false);
   const dispatch = useDispatch();
   const { user, signOut } = useAuth();
   async function handleSignOut() {
@@ -20,16 +22,19 @@ export default function Header() {
       {user ? (
         <div className='space-x-4 font-secondary flex flex-row items-center justify-center '>
           <Link to='/dashboard'>
-            <button className='px-3 py-1 text-sm md:text-xl md:px-6 md:py-2 font-bold text-white capitalize bg-gradient-to-r from-indigo-300 to-purple-400 transition duration-500 transform hover:-translate-y-1 hover:scale-100'>
+            <button className='px-3 py-1 text-sm md:text-xl md:px-6 md:py-2 font-bold text-white capitalize bg-gradient-to-r from-indigo-300 to-purple-600 transition duration-500 transform hover:-translate-y-1 hover:scale-100'>
               Dashboard
             </button>
           </Link>
-          <button
-            className=' px-2 py-1 text-sm md:text-xl  md:px-6 md:py-2 font-bold text-white bg-gradient-to-r from-red-300 via-red-400 to-yellow-500 transition duration-500 transform hover:-translate-y-1  hover:bg-yellow-400'
-            onClick={handleSignOut}
-          >
-            Sign Out
-          </button>
+          <ConfirmDialog
+            isOpen={isOpen}
+            setOpen={setOpen}
+            handleConfirm={handleSignOut}
+            title='Log Out?'
+            message='Are you sure you want to log out?'
+            titleAction='Log Out'
+            className='px-2 py-1 text-sm md:text-xl  md:px-6 md:py-2 font-bold text-white bg-gradient-to-r from-red-400 via-red-500 to-yellow-600 transition duration-500 transform hover:-translate-y-1  hover:bg-yellow-400'
+          />
         </div>
       ) : (
         <Link to='/login'>

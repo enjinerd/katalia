@@ -2,7 +2,15 @@ import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 
-export default function DeleteDialog({ isOpen, setOpen, handleDelete }) {
+export default function ConfirmDialog({
+  isOpen,
+  setOpen,
+  handleConfirm,
+  message,
+  title,
+  className,
+  titleAction,
+}) {
   function closeModal() {
     setOpen(false);
   }
@@ -13,12 +21,8 @@ export default function DeleteDialog({ isOpen, setOpen, handleDelete }) {
 
   return (
     <>
-      <button
-        type='button'
-        onClick={openModal}
-        className='disabled px-3 py-1 text-sm md:text-base md:px-3 md:py-2 font-bold text-white bg-red-500 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:bg-red-400 disabled:opacity-60 disabled:cursor-not-allowed'
-      >
-        Delete Snippet
+      <button type='button' onClick={openModal} className={className}>
+        {titleAction}
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -61,25 +65,23 @@ export default function DeleteDialog({ isOpen, setOpen, handleDelete }) {
                   as='h3'
                   className='text-lg font-medium leading-6 text-gray-900'
                 >
-                  Hapus Snippet ?
+                  {title}
                 </Dialog.Title>
                 <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>
-                    Snippet yang sudah dihapus tidak dapat dikembalikan.
-                  </p>
+                  <p className='text-sm text-gray-500'>{message} </p>
                 </div>
 
                 <div className='mt-4 flex flex-row space-x-3'>
                   <button
                     type='button'
-                    className='inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500'
-                    onClick={handleDelete}
+                    className='inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-400 via-red-500 to-yellow-600 transition duration-500 transform hover:-translate-y-1  hover:bg-yellow-400 border border-transparent rounded-md  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 '
+                    onClick={handleConfirm}
                   >
                     Got it, thanks!
                   </button>
                   <button
                     type='button'
-                    className='inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500'
+                    className='inline-flex justify-center px-4 py-2 text-sm font-medium text-blue bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500'
                     onClick={closeModal}
                   >
                     Cancel
