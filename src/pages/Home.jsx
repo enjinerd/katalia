@@ -1,13 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_DATA } from '@/graphql/gql';
 import Header from '@/components/Header';
 import { Link } from 'react-router-dom';
 import '@/pages/styles/Home.css';
 import { AnimatedInput } from '@/components/AnimatedInput';
+import Fuse from 'fuse.js';
+import ListData from '@/components/ListData';
 
 export default function Home() {
   const { data } = useQuery(GET_ALL_DATA);
+  const options = {
+    includeScore: true,
+    // Search in `author` and in `tags` array
+    keys: ['title'],
+  };
+  const [fuzzyData, setFuzzy] = useState('');
+  const [isFuzzy, setIsFuzzy] = useState(false);
+
+  const fuse = new Fuse(data?.katalia_snippet, options);
+
+  const handleSearch = (e) => {
+    if (e.target.value !== '') {
+      setIsFuzzy(true);
+    } else {
+      setIsFuzzy(false);
+    }
+    const { value } = e.target;
+    const result = fuse.search(value);
+    setFuzzy(result);
+    console.log(fuzzyData[0].item.title);
+  };
+
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -18,26 +42,16 @@ export default function Home() {
           <Header />
           <section className='content  p-6 space-y-8 mt-8'>
             <div className='flex flex-row space-x-4 items-center justify-center'>
-              <AnimatedInput placeholder='Search snippet...' />
-              <button className='px-6 py-2 font-bold text-white uppercase bg-green-500 font-dm text-lg'>
-                Cari
-              </button>
+              <AnimatedInput
+                placeholder='Search snippet...'
+                onChange={handleSearch}
+              />
             </div>
             {data?.katalia_snippet ? (
-              <div className='grid grid-cols-2 md:grid-cols-4'>
-                {data?.katalia_snippet?.map((data) => (
-                  <div className='snippet_card shadow-xl rounded-md flex flex-col m-3 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 h-28 transition duration-500 transform hover:-translate-y-1 hover:scale-100 hover:text-white'>
-                    <p className='font-bold px-6 text-sm md:text-base py-4 h-full font-primary  '>
-                      <Link to={`/snippet/${data.id}`}>{data.title}</Link>
-                    </p>
-                    <div className='bg-gradient-to-l from-gray-700 via-gray-900 to-black '>
-                      <p className='text-sm md:text-base font-bold text-white p-2 font-dm'>
-                        {data.username}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ListData
+                data={isFuzzy ? fuzzyData : data?.katalia_snippet}
+                isFuzzy={isFuzzy}
+              />
             ) : (
               <div className=' flex justify-center items-center p-12'>
                 <div className='animate-spin rounded-full h-20 w-20 border-b-2 border-gray-900'></div>
