@@ -5,6 +5,7 @@ import {
   GET_SPECIFIC_DATA,
   UPDATE_SNIPPET,
   DELETE_SNIPPET,
+  UPDATE_UPCOUNT_SNIPPET,
 } from '@/graphql/gql';
 import { useHistory, useParams } from 'react-router';
 import { CopyBlock, dracula } from 'react-code-blocks';
@@ -16,8 +17,14 @@ import { useAuth } from '@/contexts/Auth';
 import EditorCode from '@/components/Editor';
 import { useForm, useFormState } from 'react-hook-form';
 import ConfirmDialog from '@/components/ConfirmDialog';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUpcount, deleteUpcount } from '@/store/globalSlice';
 
 export default function Snippet(props) {
+  const globalState = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const [isUpcount, setIsUpcount] = useState(null);
+
   const { snip } = useParams();
   const history = useHistory();
   const [getSnippet, { data, error }] = useLazyQuery(GET_SPECIFIC_DATA, {
@@ -27,6 +34,7 @@ export default function Snippet(props) {
   });
   const [deleteSnippet] = useMutation(DELETE_SNIPPET);
   const [updateSnippet] = useMutation(UPDATE_SNIPPET);
+  const [updateUpcount] = useMutation(UPDATE_UPCOUNT_SNIPPET);
 
   const snippetRef = useRef();
   const { user } = useAuth();
@@ -80,10 +88,58 @@ export default function Snippet(props) {
       });
   };
 
+  const handleUpcount = () => {
+    if (isUpcount && data?.katalia_snippet_by_pk.upcount !== 0) {
+      updateUpcount({
+        variables: {
+          id: snip,
+          upcount: -1,
+        },
+        refetchQueries: [
+          {
+            query: GET_SPECIFIC_DATA,
+            variables: {
+              id: snip,
+            },
+          },
+        ],
+        awaitRefetchQueries: true,
+      }).then(() => {
+        dispatch(deleteUpcount(snip));
+        setIsUpcount(!isUpcount);
+      });
+    } else {
+      updateUpcount({
+        variables: {
+          id: snip,
+          upcount: 1,
+        },
+        refetchQueries: [
+          {
+            query: GET_SPECIFIC_DATA,
+            variables: {
+              id: snip,
+            },
+          },
+        ],
+        awaitRefetchQueries: true,
+      }).then(() => {
+        dispatch(setUpcount(snip));
+        setIsUpcount(!isUpcount);
+      });
+    }
+  };
+
   useEffect(() => {
     getSnippet();
     if (data?.katalia_snippet_by_pk?.Snip_REL_aggregate?.nodes?.length > 0) {
       setCode(data?.katalia_snippet_by_pk?.snippet);
+      if (globalState.data.upCount.includes(snip)) {
+        setIsUpcount(true);
+      } else {
+        setIsUpcount(false);
+      }
+
       if (
         data?.katalia_snippet_by_pk?.Snip_REL_aggregate?.nodes[0].email ===
         user?.email
@@ -195,20 +251,25 @@ export default function Snippet(props) {
             <p className='font-bold text-lg rounded-lg px-3 py-2 bg-dark font-secondary'>
               {data?.katalia_snippet_by_pk.username}
             </p>
-            <button
-              className='px-4 py-2 font-bold text-white capitalize bg-green-600 text-lg md:text-xl font-dm'
-              onClick={() => exportComponentAsJPEG(snippetRef)}
-            >
-              Up
-            </button>
-            <p className='text-dark font-bold'> 15</p>
-            <button
-              className='px-4 py-2 font-bold text-white capitalize bg-red-600 text-lg md:text-xl font-dm'
-              onClick={() => exportComponentAsJPEG(snippetRef)}
-            >
-              Down
-            </button>
-            <p className='text-dark font-bold'> 15</p>
+            {isUpcount ? (
+              <button
+                className='px-4 py-2 font-bold text-white capitalize bg-red-600 text-lg md:text-xl font-dm'
+                onClick={handleUpcount}
+              >
+                Down
+              </button>
+            ) : (
+              <button
+                className='px-4 py-2 font-bold text-white capitalize bg-green-600 text-lg md:text-xl font-dm'
+                onClick={handleUpcount}
+              >
+                Up
+              </button>
+            )}
+            <p className='text-dark font-bold font-dm text-lg md:text-xl'>
+              {' '}
+              {data?.katalia_snippet_by_pk.upcount}
+            </p>
           </div>
         </section>
       ) : (

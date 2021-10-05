@@ -5,6 +5,7 @@ const globalSlice = createSlice({
   initialState: {
     data: {
       username: '',
+      upCount: [''],
       theme: 'light',
     },
   },
@@ -15,8 +16,17 @@ const globalSlice = createSlice({
     setTheme: (state, action) => {
       state.data.theme = action.payload;
     },
+    setUpcount: (state, action) => {
+      state.data.upCount.push(action.payload);
+    },
+    deleteUpcount: (state, action) => {
+      state.data.upCount = state.data.upCount.filter(
+        (e) => e !== action.payload
+      );
+    },
   },
 });
 
-export const { setUsername, setTheme } = globalSlice.actions;
+export const { setUsername, setTheme, setUpcount, deleteUpcount } =
+  globalSlice.actions;
 export default globalSlice.reducer;

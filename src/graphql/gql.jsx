@@ -7,6 +7,7 @@ export const GET_ALL_DATA = gql`
       snippet
       title
       username
+      upcount
     }
   }
 `;
@@ -21,7 +22,7 @@ export const GET_SPECIFIC_DATA = gql`
       username
       title
       snippet
-      desc
+      upcount
     }
   }
 `;
@@ -111,6 +112,19 @@ export const DELETE_SNIPPET = gql`
   mutation MyMutation($id: String!) {
     delete_katalia_snippet_by_pk(id: $id) {
       title
+    }
+  }
+`;
+
+export const UPDATE_UPCOUNT_SNIPPET = gql`
+  mutation MyMutation($id: String!, $upcount: Int!) {
+    update_katalia_snippet_by_pk(
+      pk_columns: { id: $id }
+      _set: {}
+      _inc: { upcount: $upcount }
+    ) {
+      id
+      upcount
     }
   }
 `;
