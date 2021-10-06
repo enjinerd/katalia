@@ -49,6 +49,7 @@
     "postcss": "^8.2.13",
     "tailwindcss": "^2.1.2",
     "vite": "^2.2.3",
+    "vite-babel-plugin": "^0.0.2",
     "vite-plugin-mkcert": "^1.5.1"
   }
 }
