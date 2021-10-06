@@ -7,4 +7,3 @@ export { default as NotFound } from './NotFound';
 export { default as SignUp } from './SignUp';
 export { default as Snippet } from './Snippet';
 export { default as UserSettings } from './UserSettings';
-export { default as Welcome } from './Welcome';
