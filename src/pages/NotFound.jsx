@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header';
-import { useSelector } from 'react-redux';
 
 export default function NotFound() {
   return (

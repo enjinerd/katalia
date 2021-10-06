@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Editor from 'react-simple-code-editor';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 
 import { useHistory } from 'react-router';
 import { useAuth } from '@/contexts/Auth';
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { useForm, useFormState } from 'react-hook-form';
+import { useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { ADD_SNIPPET } from '@/graphql/gql';
 import { customAlphabet } from 'nanoid';
@@ -55,13 +52,12 @@ export default function Add() {
     },
   });
 
-  // Get current user and signOut function from context
-  const { user, signOut } = useAuth();
   const history = useHistory();
 
   const onSubmit = async (data) => {
     const title = getValues('title');
     const desc = getValues('desc');
+    toast.loading('Adding data....');
     await addSnippet({
       variables: {
         id: nanoid(),

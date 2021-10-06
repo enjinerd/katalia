@@ -9,13 +9,12 @@ import {
 } from '@/graphql/gql';
 import { useHistory, useParams } from 'react-router';
 import { CopyBlock, dracula } from 'react-code-blocks';
-import useClipboard from 'react-use-clipboard';
 import { exportComponentAsJPEG } from 'react-component-export-image';
 import '@/pages/styles/Snippet.css';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '@/contexts/Auth';
 import EditorCode from '@/components/Editor';
-import { useForm, useFormState } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUpcount, deleteUpcount } from '@/store/globalSlice';
@@ -47,6 +46,7 @@ export default function Snippet(props) {
   const { register, getValues, handleSubmit } = useForm();
 
   const handleUpdate = () => {
+    toast.loading('Updating data...');
     console.log(getValues('title'));
     setVisible(!isVisible);
     updateSnippet({
@@ -67,6 +67,7 @@ export default function Snippet(props) {
     })
       .then((res) => {
         console.log(res);
+        toast.success('Data updated!');
       })
       .catch((err) => {
         console.log(err);

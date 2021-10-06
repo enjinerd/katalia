@@ -2,23 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_ALL_DATA, DATA_LENGTH } from '@/graphql/gql';
 import Header from '@/components/Header';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import '@/pages/styles/Home.css';
 import { AnimatedInput } from '@/components/AnimatedInput';
 import Fuse from 'fuse.js';
 import ListData from '@/components/ListData';
 import Paginator from 'react-hooks-paginator';
-import FilterOption from '@/components/FilterOption';
 
 export default function Home() {
   const [getData, { data }] = useLazyQuery(GET_ALL_DATA);
   const [getLength, { data: length }] = useLazyQuery(DATA_LENGTH);
 
   // Paginaton
-  const [currentData, setCurrentData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [page, setPage] = useState(1);
 
   const options = {
     includeScore: true,
@@ -70,7 +67,6 @@ export default function Home() {
                 onChange={handleSearch}
               />
             </div>
-            <FilterOption />
             {data?.katalia_snippet ? (
               <ListData
                 data={isFuzzy ? fuzzyData : data?.katalia_snippet}

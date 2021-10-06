@@ -38,6 +38,7 @@ export default function ForgetPass() {
 
   async function onSubmitEmail() {
     setDisabled(true);
+    toast.loading('Proceed request...');
 
     // Get email and password input values
     const email = getValues('email');
@@ -48,7 +49,7 @@ export default function ForgetPass() {
       setIsError("The email din't registered yet");
       toast.error(isError);
       setDisabled(false);
-
+      toast.error(errorForget.message);
       console.log(errorForget.message);
     } else {
       setSuccess(true);
@@ -58,7 +59,7 @@ export default function ForgetPass() {
   const handleChange = (e) => {
     if (e.target.value !== getValues('password')) {
       setIsError({
-        message: 'The passwords do not match',
+        message: '',
         status: true,
       });
     } else {

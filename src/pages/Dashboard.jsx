@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withRouter, useLocation } from 'react-router';
+import { withRouter } from 'react-router';
 import { useAuth } from '@/contexts/Auth';
 import {
   GET_SPESIFIC_USER,
@@ -32,7 +32,7 @@ function Dashboard() {
   const name = unsullied();
 
   // Get current user and signOut function from context
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     getSpecificUser({

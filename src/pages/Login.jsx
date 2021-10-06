@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useHistory, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
