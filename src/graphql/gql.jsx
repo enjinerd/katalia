@@ -1,16 +1,26 @@
 import { gql } from '@apollo/client';
 
 export const GET_ALL_DATA = gql`
-  query MyQuery {
-    katalia_snippet {
+  query MyQuery($limit: Int = 8, $offset: Int = 0) {
+    katalia_snippet(limit: $limit, offset: $offset) {
       id
-      snippet
       title
       username
       upcount
     }
   }
 `;
+
+export const DATA_LENGTH = gql`
+  query MyQuery {
+    katalia_snippet_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
 export const GET_SPECIFIC_DATA = gql`
   query MyQuery($id: String!) {
     katalia_snippet_by_pk(id: $id) {

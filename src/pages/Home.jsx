@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_ALL_DATA } from '@/graphql/gql';
+import { useLazyQuery } from '@apollo/client';
+import { GET_ALL_DATA, DATA_LENGTH } from '@/graphql/gql';
 import Header from '@/components/Header';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import '@/pages/styles/Home.css';
 import { AnimatedInput } from '@/components/AnimatedInput';
 import Fuse from 'fuse.js';
 import ListData from '@/components/ListData';
+import Paginator from 'react-hooks-paginator';
+import FilterOption from '@/components/FilterOption';
 
 export default function Home() {
-  const { data } = useQuery(GET_ALL_DATA);
+  const [getData, { data }] = useLazyQuery(GET_ALL_DATA);
+  const [getLength, { data: length }] = useLazyQuery(DATA_LENGTH);
+
+  // Paginaton
+  const [currentData, setCurrentData] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1);
+
   const options = {
     includeScore: true,
     // Search in `author` and in `tags` array
-    keys: ['title'],
+    keys: ['title', 'username'],
   };
   const [fuzzyData, setFuzzy] = useState('');
   const [isFuzzy, setIsFuzzy] = useState(false);
@@ -35,10 +45,19 @@ export default function Home() {
   };
 
   useEffect(() => {
+    getData();
+    getLength();
     if (location.hash.split('&').includes('type=recovery')) {
       history.push('/forget-password' + location.hash.split('&')[0]);
     }
-  }, [data]);
+  }, []);
+
+  useEffect(() => {
+    getData({ variables: { offset } });
+  }, [offset]);
+
+  useEffect(() => {}, [offset]);
+
   return (
     <>
       <main>
@@ -51,6 +70,7 @@ export default function Home() {
                 onChange={handleSearch}
               />
             </div>
+            <FilterOption />
             {data?.katalia_snippet ? (
               <ListData
                 data={isFuzzy ? fuzzyData : data?.katalia_snippet}
@@ -61,6 +81,15 @@ export default function Home() {
                 <div className='animate-spin rounded-full h-20 w-20 border-b-2 border-gray-900'></div>
               </div>
             )}
+            <Paginator
+              totalRecords={length?.katalia_snippet_aggregate.aggregate.count}
+              pageLimit={8}
+              pageNeighbours={2}
+              setOffset={setOffset}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pageContainerClass='md:text-lg font-dm react-hooks-paginator'
+            />
           </section>
         </div>
       </main>
