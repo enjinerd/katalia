@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, Login, SignUp, NotFound, Welcome, ForgetPass } from '@/pages/';
+import { Home, Login, SignUp, NotFound, ForgetPass } from '@/pages/';
 import Snip from '@/routes/Snip';
 import Dashboard from '@/routes/Dashboard';
 
@@ -22,7 +22,6 @@ export default function Routes() {
           <Route path='/login' component={Login} />
           <Route path='/snippet' component={Snip} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
-          <PrivateRoute path='/welcome' component={Welcome} />
           <Route path='/forget-password' component={ForgetPass} />
           <Route path='/*' component={NotFound} />
         </Switch>

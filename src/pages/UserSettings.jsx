@@ -5,7 +5,6 @@ import { GET_SPESIFIC_USER, UPDATE_USERNAME } from '@/graphql/gql';
 import * as unsullied from 'unsullied';
 import { customAlphabet } from 'nanoid';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUsername } from '@/store/globalSlice';
 import { useForm, useFormState } from 'react-hook-form';
@@ -23,7 +22,6 @@ export default function Dashboard() {
   const globalState = useSelector((state) => state);
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [getSpecificUser, { data: dataUser, error }] =
     useLazyQuery(GET_SPESIFIC_USER);
