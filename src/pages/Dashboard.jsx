@@ -6,7 +6,6 @@ import {
   REGISTER_USER,
   GET_USER_SNIPPET_DATA,
 } from '@/graphql/gql';
-import * as unsullied from 'unsullied';
 import { customAlphabet } from 'nanoid';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
@@ -28,8 +27,7 @@ function Dashboard() {
     GET_USER_SNIPPET_DATA
   );
 
-  const nanoid = customAlphabet('1234567890abcdef', 4);
-  const name = unsullied();
+  const nanoid = customAlphabet('1234567890abcdef', 6);
 
   // Get current user and signOut function from context
   const { user } = useAuth();
@@ -63,7 +61,7 @@ function Dashboard() {
     if (!dataUser?.katalia_user.username) {
       addUsername({
         variables: {
-          username: name + nanoid(),
+          username: nanoid(),
           email: user.email,
         },
       });

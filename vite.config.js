@@ -8,9 +8,6 @@ export default defineConfig({
     alias: [{ find: '@', replacement: path.resolve(__dirname, '/src') }],
   },
   plugins: [reactRefresh()],
-  optimizeDeps: {
-    include: ['esm-dep < cjs-dep'],
-  },
   build: {
     chunkSizeWarningLimit: 2000,
   },
