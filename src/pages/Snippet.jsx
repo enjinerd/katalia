@@ -46,7 +46,9 @@ export default function Snippet(props) {
   const { register, getValues, handleSubmit } = useForm();
 
   const handleUpdate = () => {
-    toast.loading('Updating data...');
+    toast.loading('Updating data...', {
+      duration: 3500,
+    });
     console.log(getValues('title'));
     setVisible(!isVisible);
     updateSnippet({
@@ -82,7 +84,7 @@ export default function Snippet(props) {
       },
     })
       .then((res) => {
-        history.push('/dashboard');
+        history.push('/');
       })
       .catch((err) => {
         console.log(err);
