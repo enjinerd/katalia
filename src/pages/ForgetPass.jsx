@@ -38,7 +38,9 @@ export default function ForgetPass() {
 
   async function onSubmitEmail() {
     setDisabled(true);
-    toast.loading('Proceed request...');
+    toast.loading('Proceed request...', {
+      duration: 5000,
+    });
 
     // Get email and password input values
     const email = getValues('email');
