@@ -71,7 +71,6 @@ export const GET_SPESIFIC_USER = gql`
 // ANCHOR add data
 export const ADD_SNIPPET = gql`
   mutation MyMutation(
-    $desc: String = ""
     $id: String!
     $snippet: String!
     $title: String!
@@ -82,7 +81,6 @@ export const ADD_SNIPPET = gql`
         snippet: $snippet
         username: $username
         title: $title
-        desc: $desc
         id: $id
       }
     ) {
