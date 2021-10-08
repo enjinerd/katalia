@@ -11,7 +11,6 @@ import { nanoid } from 'nanoid';
 
 const Dashboard = () => {
   const { path } = useRouteMatch();
-  const { about_page } = useParams();
 
   return (
     <Switch>

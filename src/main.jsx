@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet';
-import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { store, persistor } from '@/store/';
 import { PersistGate } from 'redux-persist/lib/integration/react';

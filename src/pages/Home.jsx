@@ -10,13 +10,18 @@ import ListData from '@/components/ListData';
 import Paginator from 'react-hooks-paginator';
 
 export default function Home() {
+  // SECTION hooks
+
+  // ANCHOR gql
   const [getData, { data }] = useLazyQuery(GET_ALL_DATA);
   const [getLength, { data: length }] = useLazyQuery(DATA_LENGTH);
 
-  // Paginaton
+  // ANCHOR Paginator
+  // NOTE: Paginator offset and current page
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // ANCHOR Fuzzy search
   const options = {
     includeScore: true,
     // Search in `author` and in `tags` array
@@ -24,10 +29,13 @@ export default function Home() {
   };
   const [fuzzyData, setFuzzy] = useState('');
   const [isFuzzy, setIsFuzzy] = useState(false);
+  const fuse = new Fuse(data?.katalia_snippet, options);
+
+  // ANCHOR router
   const location = useLocation();
   const history = useHistory();
 
-  const fuse = new Fuse(data?.katalia_snippet, options);
+  // !SECTION Hooks
 
   const handleSearch = (e) => {
     if (e.target.value !== '') {
@@ -52,8 +60,6 @@ export default function Home() {
   useEffect(() => {
     getData({ variables: { offset } });
   }, [offset]);
-
-  useEffect(() => {}, [offset]);
 
   return (
     <>

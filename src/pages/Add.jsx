@@ -56,14 +56,12 @@ export default function Add() {
 
   const onSubmit = async (data) => {
     const title = getValues('title');
-    const desc = getValues('desc');
     toast.loading('Adding data....');
     await addSnippet({
       variables: {
         id: nanoid(),
         snippet: code,
         title,
-        desc,
         username,
       },
     }).then(() => {

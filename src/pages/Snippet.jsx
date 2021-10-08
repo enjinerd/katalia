@@ -20,21 +20,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUpcount, deleteUpcount } from '@/store/globalSlice';
 
 export default function Snippet(props) {
+  // SECTION Redux
   const globalState = useSelector((state) => state);
   const dispatch = useDispatch();
+  // !SECTION
+
   const [isUpcount, setIsUpcount] = useState(null);
 
+  // SECTION Router
   const { snip } = useParams();
   const history = useHistory();
+  // !SECTION router
+
+  // SECTION graphql
+  // ANCHOR get specific snippet
   const [getSnippet, { data, error }] = useLazyQuery(GET_SPECIFIC_DATA, {
     variables: {
       id: snip,
     },
   });
+  // SECTION mutation
   const [deleteSnippet] = useMutation(DELETE_SNIPPET);
   const [updateSnippet] = useMutation(UPDATE_SNIPPET);
   const [updateUpcount] = useMutation(UPDATE_UPCOUNT_SNIPPET);
+  //  !SECTION Mutation
+  // !SECTION graphql
 
+  // SECTION Editor
   const snippetRef = useRef();
   const { user } = useAuth();
   const [isEditor, setEditor] = useState(false);
@@ -44,7 +56,9 @@ export default function Snippet(props) {
   const [isOpen, setOpen] = useState(false);
 
   const { register, getValues, handleSubmit } = useForm();
-
+  // !SECTION
+  // SECTION Method
+  // ANCHOR Update snippet
   const handleUpdate = () => {
     toast.loading('Updating data...', {
       duration: 3500,
@@ -76,6 +90,8 @@ export default function Snippet(props) {
       });
   };
 
+  // ANCHOR confirm delete
+
   const handleConfirm = () => {
     setOpen(!isOpen);
     deleteSnippet({
@@ -91,6 +107,7 @@ export default function Snippet(props) {
       });
   };
 
+  // ANCHOR : handle upcount
   const handleUpcount = () => {
     if (isUpcount && data?.katalia_snippet_by_pk.upcount !== 0) {
       updateUpcount({
@@ -133,6 +150,8 @@ export default function Snippet(props) {
     }
   };
 
+  // !SECTION Method
+  // SECTION useEffect
   useEffect(() => {
     getSnippet();
     if (data?.katalia_snippet_by_pk?.Snip_REL_aggregate?.nodes?.length > 0) {
@@ -151,6 +170,7 @@ export default function Snippet(props) {
       }
     }
   }, [data]);
+  // !SECTION Use Effect
 
   return (
     <main className='flex flex-col min-h-screen'>

@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
 
+// SECTION Get Snippet Data
+
 export const GET_ALL_DATA = gql`
   query MyQuery($limit: Int = 8, $offset: Int = 0) {
     katalia_snippet(limit: $limit, offset: $offset) {
@@ -11,6 +13,7 @@ export const GET_ALL_DATA = gql`
   }
 `;
 
+// ANCHOR Get length
 export const DATA_LENGTH = gql`
   query MyQuery {
     katalia_snippet_aggregate {
@@ -21,6 +24,7 @@ export const DATA_LENGTH = gql`
   }
 `;
 
+// ANCHOR Get specific data
 export const GET_SPECIFIC_DATA = gql`
   query MyQuery($id: String!) {
     katalia_snippet_by_pk(id: $id) {
@@ -37,6 +41,7 @@ export const GET_SPECIFIC_DATA = gql`
   }
 `;
 
+// ANCHOR GET user data
 export const GET_USER_SNIPPET_DATA = gql`
   query MyQuery($where: katalia_snippet_bool_exp! = {}) {
     katalia_snippet(where: $where) {
@@ -48,17 +53,9 @@ export const GET_USER_SNIPPET_DATA = gql`
   }
 `;
 
-export const REGISTER_USER = gql`
-  mutation MyMutation($email: String!, $username: String!) {
-    insert_katalia_user(objects: { email: $email, username: $username }) {
-      returning {
-        username
-        email
-      }
-    }
-  }
-`;
+// !SECTION Get data
 
+//ANCHOR get user details
 export const GET_SPESIFIC_USER = gql`
   query MyQuery($where: katalia_user_bool_exp! = {}) {
     katalia_user(where: $where) {
@@ -68,7 +65,10 @@ export const GET_SPESIFIC_USER = gql`
     }
   }
 `;
+// SECTION Mutation
+// SECTION Snippet
 
+// ANCHOR add data
 export const ADD_SNIPPET = gql`
   mutation MyMutation(
     $desc: String = ""
@@ -91,17 +91,7 @@ export const ADD_SNIPPET = gql`
   }
 `;
 
-export const UPDATE_USERNAME = gql`
-  mutation MyMutation($prevUsername: String!, $usernameUpdate: String!) {
-    update_katalia_user_by_pk(
-      pk_columns: { username: $prevUsername }
-      _set: { username: $usernameUpdate }
-    ) {
-      username
-    }
-  }
-`;
-
+// ANCHOR update data
 export const UPDATE_SNIPPET = gql`
   mutation MyMutation(
     $id: String!
@@ -118,6 +108,7 @@ export const UPDATE_SNIPPET = gql`
   }
 `;
 
+// ANCHOR delete data
 export const DELETE_SNIPPET = gql`
   mutation MyMutation($id: String!) {
     delete_katalia_snippet_by_pk(id: $id) {
@@ -126,6 +117,7 @@ export const DELETE_SNIPPET = gql`
   }
 `;
 
+// ANCHOR update upcount
 export const UPDATE_UPCOUNT_SNIPPET = gql`
   mutation MyMutation($id: String!, $upcount: Int!) {
     update_katalia_snippet_by_pk(
@@ -138,3 +130,32 @@ export const UPDATE_UPCOUNT_SNIPPET = gql`
     }
   }
 `;
+// !SECTION Snippet
+
+// SECTION User mutation
+// ANCHOR Register user
+export const REGISTER_USER = gql`
+  mutation MyMutation($email: String!, $username: String!) {
+    insert_katalia_user(objects: { email: $email, username: $username }) {
+      returning {
+        username
+        email
+      }
+    }
+  }
+`;
+// ANCHOR update username
+export const UPDATE_USERNAME = gql`
+  mutation MyMutation($prevUsername: String!, $usernameUpdate: String!) {
+    update_katalia_user_by_pk(
+      pk_columns: { username: $prevUsername }
+      _set: { username: $usernameUpdate }
+    ) {
+      username
+    }
+  }
+`;
+
+// !SECTION User
+
+// !SECTION Mutation
